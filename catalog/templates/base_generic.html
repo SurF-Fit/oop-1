@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    {% block title %}<title>Local Library</title>{% endblock %}
+    {% block title %}<title>Домашняя библотека</title>{% endblock %}
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link
@@ -20,7 +20,7 @@
           {% block sidebar %}
             <ul class="sidebar-nav">
               <li><a href="{% url 'index' %}">Home</a></li>
-              <li><a href="">All books</a></li>
+              <li><a href="{% url 'books' %}">All books</a></li>
               <li><a href="">All authors</a></li>
             </ul>
           {% endblock %}
