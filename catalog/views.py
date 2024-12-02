@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import generic
-from .models import Book, Author, BookInstance, Genre
+from .models import Book, Author, BookInstance
+from django.http import Http404
 
 def index(request):
     num_books=Book.objects.all().count()
@@ -17,6 +18,17 @@ def index(request):
 
 class BookListView(generic.ListView):
     model = Book
-    context_object_name = 'my_book_list'
-    queryset = Book.objects.filter(title__icontains='war')[:5]
-    template_name = 'books/my_arbitrary_template_name_list.html'
+
+class BookDetailView(generic.DetailView):
+    model = Book
+
+class AuthorsListView (generic.ListView):
+    model = Author
+
+class AuthorDetailView(generic.DetailView):
+    model = Author
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['books'] = Book.objects.filter(author=self.object)
+        return context
