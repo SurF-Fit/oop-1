@@ -9,10 +9,10 @@
 
     {% if books %}
 
-    {% for book in books %}
-        <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
-        <p>{{ book.summary }}</p>
-    {% endfor %}
+        {% for book in books %}
+            <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
+            <p>{{ book.summary }}</p>
+        {% endfor %}
 
     {% else %}
       <p>У данного автора пока не добавлены книги</p>

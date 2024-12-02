@@ -11,4 +11,9 @@
     <li><strong>Авторы:</strong> {{ num_authors }}</li>
   </ul>
 
+    <p>
+      Вы посетили эту страницу {{ num_visits }}{% if num_visits == 1 %} time{%
+      else %} times{% endif %}.
+    </p>
+
 {% endblock %}

@@ -10,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
   </head>
 
   <body>
@@ -22,6 +22,22 @@
               <li><a href="{% url 'index' %}">Главная</a></li>
               <li><a href="{% url 'books' %}">Все книги</a></li>
               <li><a href="{% url 'authors' %}">Все авторы</a></li>
+                <br>
+                 {% if user.is_staff %}
+                     <li>Читатель: {{ user.get_username }}</li>
+                     <li><a href="{% url 'bib-borrowed' %}">Все задолжности</a></li>
+                 {% endif %}
+                <br>
+             {% if user.is_authenticated %}
+                 <li>Читатель: {{ user.get_username }}</li>
+                 <li><a href="{% url 'my-borrowed' %}">Ваши задолжности</a></li>
+                 <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button class="dropdown-item" type="submit">Выйти</button>
+                 </form>
+             {% else %}
+                 <li><a href="{% url 'login'%}">Зайти</a></li>
+             {% endif %}
             </ul>
           {% endblock %}
         </div>

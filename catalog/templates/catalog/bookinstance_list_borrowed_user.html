@@ -1,0 +1,19 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Задолжности по книгам</h1>
+
+    {% if bookinstance_list %}
+    <ul>
+
+      {% for bookinstens in bookinstance_list %}
+      <li class="{% if bookinstens.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'book-detail' bookinstens.book.pk %}">{{bookinstens.book.title}}</a> ({{ bookinstens.due_back }})
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>У вас нет зодолжности!!</p>
+    {% endif %}
+{% endblock %}
