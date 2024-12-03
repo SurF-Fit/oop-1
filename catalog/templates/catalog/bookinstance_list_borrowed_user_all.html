@@ -3,17 +3,18 @@
 {% block content %}
     <h1>Задолжности по книгам у всех пользователей</h1>
 
-    {% if bookinstance_list %}
+    {% if object_list %}
     <ul>
-
-      {% for bookinstens in bookinstance_list %}
-      <li class="{% if bookinstens.is_overdue %}text-danger{% endif %}">
-        <a href="{% url 'book-detail' bookinstens.book.pk %}">{{bookinstens.book.title}}</a> ({{ bookinstens.due_back }}) - {{ bookinstens.borrower }}
-      </li>
-      {% endfor %}
+        {% for bookinst in object_list %}
+        <li>
+            <a href="{% url 'book-detail' bookinst.book.pk %}">{{ bookinst.book.title }}</a>(Срок оплаты: {{ bookinst.due_back }}) - {{ bookinst.borrower.get_username }}
+        </li>
+        {% if perms.catalog.can_mark_returned %}-
+            <a href="{% url 'renew-book-librarian' bookinst.id %}">Продлить</a>
+        {% endif %}
+        {% endfor %}
     </ul>
-
     {% else %}
-      <p>У пользователей нет зодолжности!!</p>
+        <p>There are no books currently loaned out.</p>
     {% endif %}
 {% endblock %}

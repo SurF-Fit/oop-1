@@ -1,5 +1,7 @@
 {% extends "base_generic.html" %}
 
+{% csrf_token %}
+
 {% block content %}
   <h1>Название: {{ book.title }}</h1>
 

@@ -23,10 +23,12 @@
               <li><a href="{% url 'books' %}">Все книги</a></li>
               <li><a href="{% url 'authors' %}">Все авторы</a></li>
                 <br>
-                 {% if user.is_staff %}
-                     <li>Читатель: {{ user.get_username }}</li>
-                     <li><a href="{% url 'bib-borrowed' %}">Все задолжности</a></li>
-                 {% endif %}
+                <div class="sibebarUser">
+                     {% if user.is_staff %}
+                         <li>Читатель: {{ user.get_username }}</li>
+                         <li><a href="{% url 'bib-borrowed' %}">Все задолжности</a></li>
+                     {% endif %}
+                </div>
                 <br>
              {% if user.is_authenticated %}
                  <li>Читатель: {{ user.get_username }}</li>
