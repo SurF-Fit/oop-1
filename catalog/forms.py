@@ -3,7 +3,13 @@ from django import forms
 from django.core.exceptions import ValidationError
 import datetime
 from django.forms import ModelForm
-from .models import BookInstance
+from .models import BookInstance, Book
+from django.shortcuts import get_object_or_404
+
+class PicturesUploadForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ['image']
 
 class RenewBookModelForm(ModelForm):
     def clean_due_back(self):

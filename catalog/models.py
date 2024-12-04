@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 import uuid
 from datetime import date
+from django.core.exceptions import ValidationError
 
 class MyModelName(models.Model):
 
@@ -24,6 +25,15 @@ class Genre(models.Model):
     def __str__(self):
         return self.name
 
+def validate_image(image):
+    max_size = 3 * 1024 * 1024
+    if image.size > max_size:
+        raise ValidationError('Размер файла не должен превышать 3 МБ.')
+
+    valid_extensions = ['.png', '.jpg', '.jpeg']
+    if not any(image.name.endswith(ext) for ext in valid_extensions):
+        raise ValidationError('Разрешены только форматы: jpg, jpeg, png.')
+
 class Book(models.Model):
 
     title = models.CharField(max_length=200)
@@ -31,6 +41,7 @@ class Book(models.Model):
     summary = models.TextField(max_length=1000, help_text="Enter a brief description of the book")
     isbn = models.CharField('ISBN',max_length=13, help_text='13 Character <a href="https://www.isbn-international.org/content/what-isbn">ISBN number</a>')
     genre = models.ManyToManyField(Genre, help_text="Select a genre for this book")
+    image = models.ImageField(upload_to='cover/', default='cover/default.jpg', validators=[validate_image])
 
     def __str__(self):
         return self.title
@@ -42,6 +53,9 @@ class Book(models.Model):
         return ', '.join([genre.name for genre in self.genre.all()[:3]])
 
     display_genre.short_description = 'Genre'
+
+    class Meta:
+        pass
 
 class BookInstance(models.Model):
 

@@ -5,7 +5,7 @@ from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import permission_required
-
+from .forms import PicturesUploadForm
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
